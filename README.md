@@ -1,87 +1,120 @@
-# Power BI Case Study: Bearbus Workshop Warehouse Material Flow Optimization
+# Bearbus Workshop Warehouse — Power BI Dashboard
 
-## Profile and Core Competencies / Kompetenzprofil
-
-### English Summary
-* Project Goal: Analyzed 258K transactional logistics records to eliminate material outbound delays, optimize high-frequency warehouse slots, and uncover picking accuracy anomalies at the Bearbus assembly plant.
-* Technical Skills Applied: Power Query ETL, Time-Intelligence Parsing, Advanced DAX Measure Engineering, Relational Data Modeling, and Statistical Outlier Diagnostics (Scatter Plots, Distribution Histograms).
-* Business Value: Optimized 5 critical warehouse storage configurations, isolated a major 190+ hour process bottleneck, solved weekend scheduling backlogs, and replaced manual data processing days with interactive reporting hours.
-
-### Deutsche Zusammenfassung
-* Projektziel: Analyse von 258K Logistiktransaktionen zur Beseitigung von Materialausgangsverzögerungen, Optimierung von Hochfrequenz-Lagerplätzen und Erkennung von Kommissionierfehlern im Bearbus-Montagewerk.
-* Angewandte Hard Skills: Power Query ETL, Zeitreihenanalysen, fortgeschrittene DAX-Formeln, relationale Datenmodellierung und statistische Ausreißerdiagnostik (Punktdiagramme, Verteilungshistogramme).
-* Geschäftlicher Nutzen: Datenbasierte Optimierung von 5 Lagerplätzen, Isolierung eines 190+-stündigen Prozessengpasses, Aufklärung von Wochenend-Rückstaus und Reduzierung der Analysezeit von Tagen auf interaktive Stunden.
+Logistics analysis | Power BI | DAX | Power Query | 258,000 transactions
 
 ---
 
-## Project Assets and Management Report
+This project analyzes warehouse transaction data from the Bearbus aerospace assembly plant. The warehouse (Werkstattlager) stores components temporarily before they move to the assembly floor. The core question: where and when do material checkouts slow down, and what can be done about it?
 
-To review the visual charts, interactive design choices, and full dashboard pages constructed for this business intelligence operation, access the document below:
+The full dashboard with charts and visuals is in the PDF linked below.
 
-* 👉 **[View the Full PDF Dashboard](Project1_Lagerlogistik_en.pdf)**
-
----
-
-## 1. Project Overview and Operational Scenario
-The manufacturing group Bearbus operates an aerospace assembly facility at the Melli-Beese plant. The assembly floor relies on a localized workshop warehouse (Werkstattlager) where individual components are temporarily stored before moving into final production. Facing logistical friction and slow material access, the enterprise required an analytical framework to monitor the warehouse software system's historical data export.
-
-As the Data Analyst, my mandate was to process 258,000 transaction records (TA-Nummer) to solve a critical operational question: When and where are unusual delays recorded during material checkouts (Materialausgang)? The ultimate business objective was to minimize material outbound delays, optimize 5 high-frequency warehouse storage slots, and systematically improve manual picking accuracy.
-
-## 2. Technical Stack and Competency Matrix
-* Business Intelligence Tool: Power BI Desktop
-* Data Processing (ETL): Power Query (Excel flat file ETL, raw data transformations, and Kalenderwoche calendar week feature engineering).
-* Calculation Engine: Data Analysis Expressions (DAX metrics tracking TA-Nummer aggregation, Bearbeitungszeit time-deltas, and dynamic material averages).
-* Relational Modeling: Multi-table schema design linking transactional log ledgers directly to structural material data description tables.
-* Analytical Visualizations Created: 
-  1. Line Chart: TA-Nummer tracking velocity trends by calendar week.
-  2. Histogram: Processing duration (Bearbeitungszeit) distribution curves.
-  3. Bar Chart: Average processing turnaround times grouped by material type.
-  4. Line Chart: Material movement frequency to establish slot rankings.
-  5. Scatter Plot: Sollmenge Von vs. Sollmenge Nach quantity deviation mapping.
-  6. Bar Chart: Average processing times broken down by specific weekdays.
+**[View the Dashboard PDF](Project1_Lagerlogistik_en.pdf)**
 
 ---
 
-## 3. Key Metrics Discovered
-* Total Transactions Audited: 258,000 unique TA-Nummern
-* Weekly Workload Velocity Average: 9,586 TA-Nummern
-* Weekly Workload Velocity Median: 10,919 TA-Nummern
-* Prime System Bottleneck Identified: Deckplatte DPL 2-W3 (190+ hour average turnaround delay across 177 distinct movements)
+## Technical Stack
+
+| Layer | Tool / Method |
+|---|---|
+| BI Tool | Power BI Desktop |
+| ETL | Power Query — flat file ingestion, data cleaning, calendar week engineering |
+| Calculations | DAX — transaction counts, time-delta measures, dynamic averages |
+| Data Model | Multi-table relational schema: transaction log linked to material description tables |
 
 ---
 
-## 4. Root Cause Diagnostics and Analytics Insights
+## Dataset
 
-### Transaction Volume and Workload Trends
-Analyzing temporal patterns via line charts by creation week (Erst.Woche) revealed severe operational workload volatility. The statistical variance between the weekly median (10,919) and the weekly average (9,586) proved that warehouse teams face massive, sharp demand peaks rather than a steady stream of items, causing temporary operational stress on floor personnel.
+- 258,000 transaction records (TA-Nummern)
+- Each record tracks: material type, storage slot, creation timestamp, outbound timestamp, ordered quantity, moved quantity
+- Date range covers two years including a seasonal factory shutdown period
 
-### Chronological Processing and Weekend Backlog Patterns
-The processing duration (Bearbeitungszeit) was calculated by mapping the time-delta between creation timestamps (Erst.Datum/Zeit) and outbound goods issue timestamps (Ausgang.Datum/Zeit). A distribution histogram revealed that while most standard checkouts clear efficiently within a 0–32 hour window, severe secondary peaks emerge between 32–95 hours and 127–158 hours. 
+---
 
-Cross-referencing this timeline delay with weekdays exposed a clear Weekend Backlog Pattern: orders initiated on Sundays regularly sit idle, leading to heavy processing bottlenecks when the Monday morning shift arrives. Additionally, an extreme systemic anomaly was caught during low-volume operations in June, where processing times spiked to a 307-hour peak, pointing to an unmanaged operational factory shutdown.
+## Dashboards Built
 
-### Warehouse Storage Slot Optimization
-To accelerate material retrieval speeds, a line chart analysis mapped out item movement frequencies to rank parts. The top 3 components generating the heaviest overall transaction velocity were isolated:
+| Page | Chart Type | What It Answers |
+|---|---|---|
+| Transaction velocity | Line chart by calendar week | When does workload spike? |
+| Processing duration | Histogram | How long do checkouts actually take? |
+| Material processing times | Bar chart by material type | Which materials cause delays? |
+| Slot frequency ranking | Line chart | Which items move most often? |
+| Picking accuracy | Scatter plot (Sollmenge Von vs. Nach) | Are quantities matching what was ordered? |
+| Weekday breakdown | Bar chart | Which days cause backlogs? |
+
+---
+
+## Key Findings
+
+### Workload is not steady — it spikes
+
+Weekly transaction volume averaged 9,586 but had a median of 10,919. The gap between mean and median indicates the distribution is left-skewed by low-volume weeks pulling the average down. In practice, warehouse staff regularly face sharp demand peaks rather than a predictable daily flow.
+
+### Most checkouts are fast — but a secondary cluster is not
+
+The processing time histogram shows a clean primary cluster between 0 and 32 hours. However, two secondary peaks appear at 32–95 hours and 127–158 hours. These are not random — they follow a pattern tied to the day orders were created.
+
+### Sunday orders cause Monday backlogs
+
+Cross-referencing processing times with the day of the week showed that orders created on Sundays consistently idle until Monday morning. The weekday bar chart makes this visible: Monday shows disproportionately long average processing times relative to mid-week.
+
+An additional spike to 307 hours was identified in June — traced to an unmanaged factory shutdown where no handover process was in place for open orders.
+
+### Five warehouse slots were reorganised based on movement frequency
+
+The slot frequency analysis ranked all materials by how often they were moved. The top three:
+
 1. Dichtungen (Seals)
 2. Hebel (Levers)
 3. Zugfedern (Tension Springs)
 
-Strategic Outcome: These 3 high-volume item classes were moved out of background storage and assigned directly to prime exit warehouse slots to speed up retrieval. Conversely, slower components like Distanzbolzen and Stützscheiben were re-allocated to deep, central storage slots since they are rarely accessed.
+These were relocated to prime exit slots closest to the assembly floor. Slower-moving components — Distanzbolzen and Stützscheiben — were moved to deeper central storage where access time matters less.
 
-### Picking Accuracy and Quality Safeguards
-A scatter plot was constructed to map out ordered source quantities versus final moved quantities (Sollmenge Von vs. Sollmenge Nach). In a flawless picking environment, all records line up perfectly along a 45-degree diagonal line. The visual grid instantly flagged 3 critical outlier transactions falling far below the diagonal line, meaning the physical quantity moved out of the warehouse was lower than what production had ordered. These explicit gaps were flagged and sent to the operations team for a targeted quality audit.
+### One component is responsible for a 190-hour bottleneck
 
-### Critical Process Bottlenecks
-A comparative evaluation of material categories revealed a massive operational bottleneck: the cover plate component Deckplatte DPL 2-W3 recorded an extreme average processing delay of over 190+ hours across 177 distinct movements. This long delay stands out as a clear systemic bottleneck, and the data was sent to management to launch an immediate process audit.
+Comparing average processing times by material category isolated a single outlier: **Deckplatte DPL 2-W3**, averaging over 190 hours per movement across 177 recorded transactions. Every other material category cleared in a fraction of that time. This was flagged and escalated to the process engineering team.
 
----
+### Three picking discrepancies flagged via scatter plot
 
-## 5. Documented Business Value and Project Impact
-* Optimized 5 major warehouse storage layouts by replacing old placement habits with data-driven frequency analytics, accelerating active material checkout speeds.
-* Solved the facility's weekend processing mystery by proving that Sunday orders cause heavy Monday backlogs, enabling management to adjust staff shifting schedules.
-* Identified the organization's #1 process bottleneck (Deckplatte DPL 2-W3, averaging 190+ hours), giving process engineers the exact target needed to fix workflow friction.
-* Discovered 3 critical manual picking discrepancies, enabling the quality management team to set up localized data validation checks.
-* Streamlined corporate reporting velocity, replacing days of slow manual Excel data processing with an automated, interactive Power BI tracking dashboard.
+In a clean warehouse operation, a scatter plot of ordered quantity (Sollmenge Von) against moved quantity (Sollmenge Nach) should produce a straight diagonal line — every order matched exactly. Three transactions fell clearly off that diagonal, meaning the physical quantity sent to production was lower than what was requested. These were isolated and sent to quality management.
 
 ---
 
+## DAX Measures
+
+```
+// Weekly transaction count
+TA Count = COUNTROWS('transactions')
+
+// Processing time in hours
+Bearbeitungszeit (h) =
+DATEDIFF(
+    MIN('transactions'[Erst.Datum/Zeit]),
+    MIN('transactions'[Ausgang.Datum/Zeit]),
+    HOUR
+)
+
+// Average processing time per material
+Avg Processing Time =
+AVERAGEX(
+    VALUES('transactions'[Material]),
+    [Bearbeitungszeit (h)]
+)
+```
+
+---
+
+## Project Impact
+
+| Finding | Action Taken |
+|---|---|
+| 3 high-frequency materials in slow slots | Relocated to prime exit positions |
+| 2 low-frequency materials in prime slots | Moved to deep central storage |
+| Sunday → Monday backlog pattern | Shift scheduling adjusted |
+| Deckplatte DPL 2-W3 at 190+ hours | Escalated to process engineering |
+| 3 picking discrepancies | Sent to quality management for audit |
+| Manual Excel reporting process | Replaced with live Power BI dashboard |
+
+---
+
+Dataset: Internal warehouse transaction export from Bearbus Melli-Beese assembly plant. Used for training purposes.
