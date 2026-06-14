@@ -85,5 +85,3 @@ A comparative evaluation of material categories revealed a massive operational b
 
 ---
 
-
-Die in diesem Portfolio dokumentierten Datenstrukturkonzepte und Analyse-Workflows sind Open-Source und werden transparent unter der MIT-Lizenz bereitgestellt.
