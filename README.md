@@ -1,4 +1,3 @@
-# warehouse-logistics-dashboard
 # Power BI Case Study: Bearbus Workshop Warehouse Material Flow Optimization
 
 ## Profile and Core Competencies / Kompetenzprofil
