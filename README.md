@@ -18,7 +18,7 @@
 
 To review the visual charts, interactive design choices, and full dashboard pages constructed for this business intelligence operation, access the document below:
 
-* 👉 **[Download the Full PDF Dashboard and Management Report Presentation](Dashboard-Report-Presentation.pdf)**
+* 👉 **[View the Full PDF Dashboard](Project1_Lagerlogistik_en.pdf)**
 
 ---
 
